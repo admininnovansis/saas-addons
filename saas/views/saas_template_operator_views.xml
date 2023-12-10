@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--# Copyright 2019 Denis Mudarisov <https://www.it-projects.info/team/trojikman>
+    # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).-->
+<odoo>
+    <record id="saas_template_operator_form_view" model="ir.ui.view">
+        <field name="name">saas.template.operator</field>
+        <field name="model">saas.template.operator</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="oe_read_only" groups="base.group_no_one" invisible="state != 'done'" name="action_install_missing_mandatory_modules" string="Install missing mandatory modules" type="object"/>
+                    <field class="oe_read_only" name="state" nolabel="1" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="operator_db_name"/>
+                        <field name="operator_id" options="{'no_create': 1}"/>
+                    </group>
+                </sheet>
+            </form></field>
+    </record>
+    <record id="saas_template_operator_tree" model="ir.ui.view">
+        <field name="name">saas.template.operator.tree</field>
+        <field name="model">saas.template.operator</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="operator_db_name"/>
+                <field name="state"/>
+                <field name="operator_id"/>
+            </tree></field>
+    </record>
+</odoo>
