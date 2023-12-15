@@ -16,14 +16,18 @@ class SAASLog(models.Model):
         ('created', 'DB is created'),
         ('authed', 'Quick Authentication'),
         ('dropped', 'DB is dropped'),
-    ], string='Log type')
-    data_id = fields.Reference(string='Reference', selection=[
-        ('auth_quick_master.token', 'Token'),
-        ('saas.operator', 'Operator'),
-    ])
+    ],
+                            string='Log type')
+    data_id = fields.Reference(string='Reference',
+                               selection=[
+                                   ('auth_quick_master.token', 'Token'),
+                                   ('saas.operator', 'Operator'),
+                               ])
     description = fields.Char('Extra data')
     db_id = fields.Many2one('saas.db')
-    user_id = fields.Many2one('res.users', 'User', default=lambda s: s.env.user.id)
+    user_id = fields.Many2one('res.users',
+                              'User',
+                              default=lambda s: s.env.user.id)
 
     def log_db_creating(self, db, template=None):
         self.create({
@@ -40,13 +44,14 @@ class SAASLog(models.Model):
             'db_id': db.id,
         })
 
-    def log_db_authed(self, token_obj):
-        self.create({
-            'type': 'authed',
-            'data_id': 'auth_quick_master.token,%s' % token_obj.id,
-            'db_id': int(token_obj.build),
-            'user_id': token_obj.user_id.id,
-        })
+    def log_db_authed(self, token_obj_list):
+        for token_obj in token_obj_list:
+            self.create({
+                'type': 'authed',
+                'data_id': 'auth_quick_master.token,%s' % token_obj.id,
+                'db_id': int(token_obj.build),
+                'user_id': token_obj.user_id.id,
+            })
 
     def log_db_dropped(self, db):
         self.create({

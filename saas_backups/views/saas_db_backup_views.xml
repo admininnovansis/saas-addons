@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_db_backup_view_tree" model="ir.ui.view">
+        <field name="name">saas.db.backup.tree</field>
+        <field name="model">saas.db.backup</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="origin_build_id"/>
+            </tree></field>
+    </record>
+    <record id="saas_db_backup_view_form" model="ir.ui.view">
+        <field name="name">saas.db.backup.form</field>
+        <field name="model">saas.db.backup</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button invisible="remote_filename == False" name="action_restore" string="Restore backup" type="object"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button icon="fa-list" name="action_view_unfinished_jobs" type="object">
+                            <field name="unfinished_job_count" string="Pending jobs" widget="statinfo"/>
+                        </button>
+                        <button icon="fa-list" invisible="restored_build_count == 0" name="action_show_restored_builds" type="object">
+                            <field name="restored_build_count" string="Restored builds" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="create_date"/>
+                        <field name="origin_build_id"/>
+                        <field name="remote_filename"/>
+                    </group>
+                </sheet>
+            </form></field>
+    </record>
+</odoo>

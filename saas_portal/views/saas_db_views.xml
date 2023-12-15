@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_db_form_view" model="ir.ui.view">
+        <field name="name">saas.db.form.backup</field>
+        <field name="model">saas.db</field>
+        <field name="inherit_id" ref="saas_backups.saas_db_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button invisible="is_temporary == False" name="action_set_as_successor" string="Set as main" type="object"/>
+            </xpath>
+            <xpath expr="//group[@name='backup']" position="inside">
+                <field name="is_temporary"/>
+                <field name="is_approved"/>
+            </xpath></field>
+    </record>
+    <record id="ignore_is_approved_dialog" model="ir.ui.view">
+        <field name="name">saas.db.is_approved.dialog</field>
+        <field name="model">saas.db</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>
+                    Build owner has not approved this build. Are you sure, you want to set it as main?
+                </p>
+                <footer>
+                    <button class="btn-primary" name="action_set_as_successor" string="Yes" type="object"/>
+                    <button class="btn-secondary" special="cancel" string="No"/>
+                </footer>
+            </form></field>
+    </record>
+    <record id="domain_change_notice_dialog" model="ir.ui.view">
+        <field name="name">saas.db.domain.change.dialog</field>
+        <field name="model">saas.db</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>
+                    Domain of origin build will be assigned to this build
+                </p>
+                <footer>
+                    <button class="btn-primary" name="action_set_as_successor" string="Ok" type="object"/>
+                    <button class="btn-secondary" special="cancel" string="Cancel"/>
+                </footer>
+            </form></field>
+    </record>
+</odoo>

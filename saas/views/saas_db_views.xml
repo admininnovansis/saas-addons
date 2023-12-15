@@ -18,9 +18,9 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button class="oe_read_only" invisible="state != 'done'" name="action_get_build_access" string="Connect to the Build" type="object"/>
-                    <button class="oe_read_only" invisible="state != 'done'" name="refresh_data" string="Refresh" type="object"/>
-                    <button class="oe_read_only" groups="base.group_no_one" invisible="state != 'done'" name="action_install_missing_mandatory_modules" string="Install missing mandatory modules" type="object"/>
+                    <button invisible="state != 'done'" name="action_get_build_access" string="Connect to the Build" type="object"/>
+                    <button invisible="state != 'done'" name="refresh_data" string="Refresh" type="object"/>
+                    <button groups="base.group_no_one" invisible="state != 'done'" name="action_install_missing_mandatory_modules" string="Install missing mandatory modules" type="object"/>
                     <field name="state" nolabel="1" widget="statusbar"/>
                 </header>
                 <sheet>
