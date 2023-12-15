@@ -1,9 +1,13 @@
 # Copyright 2020 Eugene Molotov <https://it-projects.info/team/em230418>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
 import string
 import random
+
+from odoo import fields, models
+from odoo.tools.translate import _
+
+from odoo.addons.base.models.ir_mail_server import MailDeliveryException
 
 LETTERS_FOR_PASSWORD = string.ascii_lowercase + string.digits + "_-"
 
@@ -61,11 +65,14 @@ class SaasDb(models.Model):
         vals["name"] = self.admin_user.name
         vals["password"] = password
 
-        _, model, res_id = self.xmlid_lookup("base.user_admin")
+        model, res_id = self.xmlid_lookup("base.user_admin")
 
         self.execute_kw(model, "write", res_id, vals)
 
-        template = self.env.ref("saas_build_admin.template_build_admin_is_set")
-        template.with_context(build=self, build_admin_password=password).send_mail(self.admin_user.id, force_send=True, raise_exception=True)
-
+        try:
+            template = self.env.ref("saas_build_admin.template_build_admin_is_set")
+            template.with_context(
+                build=self, build_admin_password=password).send_mail(self.admin_user.id, force_send=True, raise_exception=True)
+        except MailDeliveryException as e:
+            self.env.user.notify_warning(message=_("Build is ready and Admin user was assigned but the notification fail!"))
         self.is_admin_user_updated_on_build = True
