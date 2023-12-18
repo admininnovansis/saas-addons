@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button class="oe_read_only" groups="base.group_no_one" invisible="state != 'done'" name="action_install_missing_mandatory_modules" string="Install missing mandatory modules" type="object"/>
-                    <field class="oe_read_only" name="state" nolabel="1" widget="statusbar"/>
+                    <button groups="base.group_no_one" invisible="state != 'done'" name="action_install_missing_mandatory_modules" string="Install missing mandatory modules" type="object"/>
+                    <field name="state" nolabel="1" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
