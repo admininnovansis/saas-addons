@@ -70,9 +70,11 @@ class SaasDb(models.Model):
         self.execute_kw(model, "write", res_id, vals)
 
         try:
-            template = self.env.ref("saas_build_admin.template_build_admin_is_set")
+            template = self.env.ref("saas_build_admin.template_build_admin_is_set").sudo()
             template.with_context(
-                build=self, build_admin_password=password).send_mail(self.admin_user.id, force_send=True, raise_exception=True)
+                build=self, 
+                build_admin_password=password
+            ).send_mail(self.admin_user.id, force_send=True, raise_exception=True)
         except MailDeliveryException as e:
             self.env.user.notify_warning(message=_("Build is ready and Admin user was assigned but the notification fail!"))
         self.is_admin_user_updated_on_build = True
