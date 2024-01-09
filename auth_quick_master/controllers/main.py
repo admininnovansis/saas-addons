@@ -14,7 +14,7 @@ class AuthQuickMaster(http.Controller):
 
     @http.route('/auth_quick_master/get-token', type="http", auth='user')
     def get_token(self, build, build_user_id, build_login, build_url):
-        _logger.debug('Request for token: build reference = %s, build_user_id = %s, build_login = %s, build_url = %s', build, build_user_id, build_login, build_url)
+        _logger.info('Request for token: build reference = %s, build_user_id = %s, build_login = %s, build_url = %s', build, build_user_id, build_login, build_url)
         token_obj = request.env['auth_quick_master.token'].create({
             'build': build,
             'build_login': build_login,
@@ -30,11 +30,12 @@ class AuthQuickMaster(http.Controller):
             return """{"error": "Build url is unknown"}"""
 
         url = urllib.parse.urljoin(build_url, '/auth_quick/check-token?token=%s' % token_obj.token)
+        _logger.info(f"URL FINAL: {url}")
         return werkzeug.utils.redirect(url, 302)
 
     @http.route('/auth_quick_master/check-token', type="json", auth='public')
     def check_token(self, token):
-        _logger.debug('Checking for token: %s', token)
+        _logger.info('Checking for token: %s', token)
         token_obj = request.env['auth_quick_master.token'].sudo().search([
             ('token', '=', token)
         ])
