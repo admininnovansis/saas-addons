@@ -70,7 +70,7 @@ class SaasDb(models.Model):
         self.execute_kw(model, "write", res_id, vals)
 
         try:
-            template = self.env.ref("saas_build_admin.template_build_admin_is_set").sudo()
+            template = self.env.ref("saas_build_admin.template_build_admin_is_set")
             template.with_context(
                 build=self, 
                 build_admin_password=password
