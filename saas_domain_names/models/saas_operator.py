@@ -2,7 +2,7 @@ from odoo import models
 
 
 class SAASOperator(models.Model):
-    _name = 'saas.operator'
+    _inherit = 'saas.operator'
 
     def get_db_url(self, db):
         url = super(SAASOperator, self).get_db_url(db)
